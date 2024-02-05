@@ -6,6 +6,7 @@ from django.db.models import Sum
 class Author(models.Model):
     authorUser = models.OneToOneField(User, on_delete=models.CASCADE)
     ratingAuthor = models.SmallIntegerField(default=0)
+
     def __str__(self):
         return f'{self.authorUser}'
 
@@ -24,6 +25,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=256, unique=True)
+
     def __str__(self):
         return f'{self.name}'
 

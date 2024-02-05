@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     # ... include the providers you want to enable:
-    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.yandex',
 ]
 
 SITE_ID = 1
@@ -163,3 +163,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'yandex': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '4004e6b8ea1746839442b96feb747f1c',
+            'secret': '278403a1414d41a699af6a9a06e44da7',
+            'key': ''
+        }
+    }
+}
