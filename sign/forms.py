@@ -14,7 +14,7 @@ class BaseRegisterForm(UserCreationForm):
         model = User
         fields = ("username", "first_name", "last_name", "email", "password1", "password2",)
 
-    def save(self):
+    def save (self):
         user = super(BaseRegisterForm, self).save()
         common_group = Group.objects.get(name='common')
         common_group.user_set.add(user)
