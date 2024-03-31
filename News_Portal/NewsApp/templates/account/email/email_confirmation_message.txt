@@ -1,0 +1,11 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}You received this message because a user{{ user_display }} indicated this email when registering on the site{{ site_domain }}.
+
+To confirm your registration, follow the link {{ activate_url }}
+
+Have a good day!
+{% endblocktrans %}{% endautoescape %}
+{% endblock %}

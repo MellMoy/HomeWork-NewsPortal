@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% load cenzura %}
+
+{% block content %}
+<h1>Добро Пожаловать на News Portal</h1>
+<hr />
+    <h2>Самые свежие новости</h2>
+<hr />
+<ul>
+    {% for news_item in news %}
+        <h3><a href="{% url 'news:news_detail' news_item.id %}">{{ news_item.title|censor }}</a></h3>
+        <p>{{ news_item.creationDate|date:"d.m.Y" }}</p>
+        <p>{{ news_item.content|censor|slice:":45" }} {{"..."}}</p>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+
+{% load cenzura %}
+
+{% block content %}
+    <h1>{{ post.title|censor }}</h1>
+    <p>{{ post.creationDate|date:"d.m.Y" }}</p>
+    <p>{{ post.content|censor }}</p>
+<!-- А здесь доступ для каждой ссылки теперь будем проверять отдельно -->
+    {% if perms.news.change_post %}
+    <hr>
+        <a href="{% url 'news:article_edit' pk=post.id %}">Изменить</a>
+    {% endif %}
+    {% if perms.news.delete_post %}
+    <hr>
+        <a href="{% url  'news:article_delete' post.id %}">Удалить</a>
+    {% endif %}
+<hr />
+{% endblock %}

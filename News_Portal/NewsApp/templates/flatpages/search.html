@@ -1,0 +1,46 @@
+{% extends 'flatpages/default.html' %}
+
+{% load cenzura %}
+{% load custom_tags %}
+{% block content %}
+    <h1>Страница поиска</h1>
+<hr />
+    <form action="" method="GET">
+        {{ filter.form.title }}
+        {{ filter.form.author }}
+        {{ filter.form.type }}
+        {{ filter.form.postCategory }}
+        {{ filter.form.creationDate }}
+        <button type="submit">Поиск</button>
+    </form>
+<hr />
+    <ul>
+        {% for post in search %}
+            <h4><a href="{% url 'news:news_detail' post.id %}">{{ post.title|censor }}</a></h4>
+        {% empty %}
+            <h3>Ничего не найдено</h3>
+        {% endfor %}
+    </ul>
+<hr />
+    <!-- Информация о предыдущих страницах -->
+    {% if page_obj.has_previous %}
+    <!-- Для каждой ссылки пагинации указываем обработку через новый тег -->
+        <a href="?{% url_replace page=1 %}">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+    {% endif %}
+
+    {# Информация о текущей странице #}
+    {{ page_obj.number }}
+
+    {# Информация о следующих страницах #}
+    {% if page_obj.has_next %}
+        <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

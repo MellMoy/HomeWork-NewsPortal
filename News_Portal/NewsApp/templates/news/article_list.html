@@ -1,0 +1,45 @@
+{% extends 'flatpages/default.html' %}
+
+{% load cenzura %}
+
+{% block content %}
+    <h2>Список статей</h2>
+    <hr />
+
+    <!-- Будем проверять права пользователя -->
+    {% if perms.news.add_post %}
+    <h3><a href="{% url 'news:articles_create' %}">Добавить статью</a></h3>
+    <hr />
+    {% endif %}
+
+    <ul>
+        {% for post in articles %}
+            <h3>{{ post.title|censor }}</h3>
+            <p>{{ post.creationDate|date:"d.m.Y" }}</p>
+            <p>{{ post.content|censor|slice:":20" }} {{"..."}}</p>
+            <a href="{% url 'news:article_detail' post.id %}">Читать далее</a>
+        {% endfor %}
+    </ul>
+
+    <hr />
+
+    <!-- Постраничная навигация -->
+    <div class="pagination justify-content-center">
+        {% if articles.has_previous %}
+            <a class="page-link" href="?page=1">&laquo;-</a>
+        {% endif %}
+
+        {% if articles.previous_page_number != 1 %}
+            <a class="page-link" href="?page={{ articles.previous_page_number }}">{{ articles.previous_page_number }}</a>
+        {% endif %}
+
+        <span class="page-link">{{ articles.number }}</span>
+
+        {% if articles.has_next %}
+            {% if paginator.num_pages != articles.next_page_number %}
+                <a class="page-link" href="?page={{ articles.next_page_number }}">{{ articles.next_page_number }}</a>
+            {% endif %}
+            <a class="page-link" href="?page={{ articles.paginator.num_pages }}">-&raquo;</a>
+        {% endif %}
+    </div>
+{% endblock %}
