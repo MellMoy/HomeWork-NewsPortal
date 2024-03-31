@@ -59,7 +59,7 @@ MIDDLEWARE = [
 
     'django.middleware.locale.LocaleMiddleware',
 
-    'basic.middlewares.TimezoneMiddleware',
+    'basicmid.middlewares.TimezoneMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
